@@ -1,0 +1,37 @@
+.match-card {
+  background-color: #e4e6fd;
+  border: 1px solid #7467c1;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: Pretendard, sans-serif;
+}
+
+.match-text {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.match-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.accept-btn,
+.reject-btn,
+.chat-btn {
+  width: 93px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #7467c1;
+  background-color: #a39bf0;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.complete .chat-btn {
+  background-color: #a39bf0;
+}

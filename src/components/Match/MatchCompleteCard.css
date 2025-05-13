@@ -1,0 +1,20 @@
+.match-card.complete {
+  background-color: #E4E6FD;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.chat-btn {
+  width: 93px;
+  height: 30px;
+  margin-top: 12px;
+  background-color: #A39BF0;
+  color: black;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #7467C1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
