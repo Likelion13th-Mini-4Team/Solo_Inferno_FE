@@ -1,20 +1,41 @@
+/* MatchCompleteCard.css */
+
 .match-card.complete {
-  background-color: #E4E6FD;
-  border: 1px solid #000000;
-  border-radius: 8px;
+  width: 341px;
+  height: 73px; /* ✅ 높이 고정 */
+  background-color: #e4e6fd;
+  border: 1px solid #7467c1;
+  border-radius: 20px;
   padding: 16px;
-  margin: 10px 0;
-  text-align: center;
+  margin: 16px auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.match-complete-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.match-text {
+  font-size: 13px; /* ✅ 약간 줄인 글자 크기 */
+  font-weight: 700;
+  color: #000000;
 }
 
 .chat-btn {
   width: 93px;
   height: 30px;
-  margin-top: 12px;
-  background-color: #A39BF0;
-  color: black;
-  font-size: 12px;
-  border-radius: 8px;
-  border: 1px solid #7467C1;
+  font-size: 11px; /* ✅ 약간 줄임 */
+  font-weight: 700;
+  color: #000000;
+  background-color: #a39bf0;
+  border: 1px solid #7467c1;
+  border-radius: 20px;
+  cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0;
 }

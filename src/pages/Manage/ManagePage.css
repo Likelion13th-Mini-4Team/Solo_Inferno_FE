@@ -1,0 +1,96 @@
+/* src/pages/Match/MatchPage.css */
+
+.page-container {
+  max-width: 393px;
+  margin: 0 auto;
+  background-color: white;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.matching-page {
+  padding: 20px;
+}
+
+.match-card {
+  background-color: #e8e3ff;
+  border: 1px solid #7467c1;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.match-card.complete {
+  background-color: #e4e6fd;
+  text-align: center;
+}
+
+.match-text {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.match-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.accept-btn,
+.reject-btn,
+.chat-btn {
+  font-size: 10px;
+  font-weight: bold;
+  width: 64px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid #7467c1;
+  background-color: #bcb6fd;
+  cursor: pointer;
+}
+
+.chat-btn {
+  margin-top: 12px;
+  width: 93px;
+  height: 30px;
+  font-size: 12px;
+  border-radius: 8px;
+  background-color: #a39bf0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 모달 */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal {
+  background-color: white;
+  padding: 24px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 280px;
+  width: 80%;
+}
+
+.modal button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #a39bf0;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
