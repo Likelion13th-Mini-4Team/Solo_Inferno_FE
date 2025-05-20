@@ -1,9 +1,11 @@
+// src/pages/Manage/index.jsx
+
 import React from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import EmptyTeamMessage from '../../components/Manage/EmptyTeamMessage';
-import TeamManageForm from '../../components/Manage/TeamManageForm';
 import './ManagePage.css';
+import EmptyTeamMessage from '@/components/Manage/EmptyTeamMessage';
+import TeamManageForm from '@/components/Manage/TeamManageForm';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 function ManagePage() {
   const teams = [
@@ -31,14 +33,9 @@ function ManagePage() {
     <div className="manage-wrapper">
       <Header />
       <main className="manage-container">
-        <img src="/logo512.png" alt="Logo" className="logo" />
-
-        {teams.length > 0 && (
-          <div className="edit-wrapper">
-            <button className="edit-btn">팀 수정하기</button>
-          </div>
-        )}
-
+        <div className="edit-wrapper">
+          <button className="edit-btn">팀 수정하기</button>
+        </div>
         {teams.length === 0 ? (
           <EmptyTeamMessage />
         ) : (
@@ -46,7 +43,6 @@ function ManagePage() {
             <TeamManageForm key={team.id} team={team} />
           ))
         )}
-
         <button className="create-btn">팀 생성하기</button>
       </main>
       <Footer />

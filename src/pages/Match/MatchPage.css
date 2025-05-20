@@ -1,37 +1,147 @@
-.match-card {
-  background-color: #e4e6fd;
-  border: 1px solid #7467c1;
-  border-radius: 8px;
+/* MatchPage.css */
+
+.page-container {
+  max-width: 393px;
+  margin: 0 auto;
+  background-color: white;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.matching-page {
   padding: 20px;
-  margin-bottom: 20px;
-  font-family: Pretendard, sans-serif;
+}
+
+/* 매칭 카드 */
+.match-card {
+  width: 341px;
+  border: 1px solid #7467c1;
+  border-radius: 20px;
+  padding: 16px;
+  margin: 16px auto;
+  background-color: #e8e3ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.match-card.complete {
+  text-align: center;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .match-text {
   font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 700;
+  color: #000000;
+  flex: 1;
 }
 
+/* 버튼 묶음 */
 .match-buttons {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
-.accept-btn,
-.reject-btn,
+/* 수락 버튼 */
+.accept-btn {
+  width: 35px;
+  height: 19px;
+  font-size: 7px;
+  font-weight: 700;
+  color: #000000;
+  background-color: #bcb6fd;
+  border: 1px solid #7467c1;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+}
+
+/* 거절 버튼 */
+.reject-btn {
+  width: 35px;
+  height: 19px;
+  font-size: 7px;
+  font-weight: 700;
+  color: #000000;
+  background-color: #e3e0ff;
+  border: 1px solid #7467c1;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+}
+
+/* 채팅 버튼 */
 .chat-btn {
   width: 93px;
   height: 30px;
-  border-radius: 5px;
-  border: 1px solid #7467c1;
-  background-color: #a39bf0;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
+  color: #000000;
+  background-color: #a39bf0;
+  border: 1px solid #7467c1;
+  border-radius: 20px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 12px;
 }
 
-.complete .chat-btn {
+/* 모달 */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal {
+  width: 334px;
+  height: 160px;
+  background-color: #e4e6fd;
+  border: 1px solid #000000;
+  border-radius: 7px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal p {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 16px;
+}
+
+/* 확인 버튼 */
+.modal-confirm-btn {
+  width: 93px;
+  height: 30px;
   background-color: #a39bf0;
+  border: 1px solid #7467c1;
+  border-radius: 7px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
