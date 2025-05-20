@@ -1,44 +1,70 @@
-// src/pages/Start.js
 import React from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as TingleLogo } from '../../images/Start/tingle.svg';
+import HakgyoFont from '../../styles/fonts/HakgyoansimDunggeunmiso-B.ttf';
+
+const LocalFontStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'HakgyoansimDunggeunmiso';
+    src: url(${HakgyoFont}) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
 
 function Start() {
   const navigate = useNavigate();
 
-  // 버튼 이름과 경로를 배열로 관리하겠습니당~~
-  const routes = [
-    { name: '로그인', path: '/login' },
-    { name: '회원가입', path: '/signup' },
-    { name: '생성없음', path: '/zero' },
-    { name: '메인', path: '/main' },
-    { name: '회원정보 수정', path: '/imodify' },
-    { name: '매칭', path: '/match' },
-    { name: '팀 관리', path: '/manage' },
-    { name: '팀 수정', path: '/tmodify' },
-    { name: '팀 생성', path: '/create' },
-    { name: '채팅', path: '/chat' },
-    { name: '마이', path: '/my' },
-  ];
-
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>🌟 시작 페이지</h1>
-      {routes.map(({ name, path }) => (
-        <button
-          key={path}
-          onClick={() => navigate(path)}
-          style={{
-            margin: '0.5rem',
-            padding: '1rem 2rem',
-            fontSize: '16px',
-            borderRadius: '8px',
-          }}
-        >
-          {name} 페이지로 이동
-        </button>
-      ))}
-    </div>
+    <>
+      <LocalFontStyle />
+      <Container>
+        <Logo />
+        <SubText>외대인들을 위한 과팅 앱</SubText>
+        <LoginButton onClick={() => navigate('/login')}>로그인</LoginButton>
+      </Container>
+    </>
   );
 }
 
 export default Start;
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 0 20px;
+`;
+
+const Logo = styled(TingleLogo)`
+  width: 170px;
+  margin-bottom: -90px;
+  margin-top: -300px;
+`;
+
+const SubText = styled.p`
+  font-family: 'HakgyoansimDunggeunmiso', sans-serif;
+  font-size: 20px;
+  color: #7F57FA;
+  margin-bottom: 60px;
+`;
+
+const LoginButton = styled.button`
+  font-family: 'HakgyoansimDunggeunmiso', sans-serif;
+  border: 1px solid #7F57FA;
+  background: transparent;
+  color: #7F57FA;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 55px;
+  border-radius: 30px;
+  cursor: pointer;
+`;
