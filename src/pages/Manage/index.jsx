@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import EmptyTeamMessage from '../../components/Manage/EmptyTeamMessage';
 import TeamManageForm from '../../components/Manage/TeamManageForm';
 import './ManagePage.css';
 
@@ -28,25 +27,15 @@ function ManagePage() {
   ];
 
   return (
-    <div className="manage-wrapper">
+    <div className="manage-wrapper" style={{ paddingTop: '24px', paddingBottom: '100px' }}>
       <Header />
       <main className="manage-container">
-        <img src="/logo512.png" alt="Logo" className="logo" />
-
-        {teams.length > 0 && (
-          <div className="edit-wrapper">
-            <button className="edit-btn">팀 수정하기</button>
-          </div>
-        )}
-
-        {teams.length === 0 ? (
-          <EmptyTeamMessage />
-        ) : (
-          teams.map((team) => (
-            <TeamManageForm key={team.id} team={team} />
-          ))
-        )}
-
+        <div className="edit-wrapper">
+          <button className="edit-btn">팀 수정하기</button>
+        </div>
+        {teams.map((team) => (
+          <TeamManageForm key={team.id} team={team} />
+        ))}
         <button className="create-btn">팀 생성하기</button>
       </main>
       <Footer />
