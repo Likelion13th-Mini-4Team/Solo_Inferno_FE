@@ -1,8 +1,9 @@
+
 import React from 'react';
+import TeamCreateForm from '../../components/Create/TeamCreateForm';
 
 function Create() {
-  const element = <h1>팀 생성페이지</h1>;
-  return element;
+  return <TeamCreateForm />;
 }
 
 export default Create;
