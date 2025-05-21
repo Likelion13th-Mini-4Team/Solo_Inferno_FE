@@ -12,7 +12,7 @@ export default function ChatHeader() {
   const navigate = useNavigate(); // 추가
 
   const handleGoBack = () => {
-    navigate(-1); // 
+    navigate(-1); 
   };
 
   const menuRef = useRef(null);
