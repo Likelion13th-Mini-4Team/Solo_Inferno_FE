@@ -5,6 +5,8 @@ import Footer from '../../components/Footer';
 import LogoutModal from '../../components/My/logoutmodal';
 import DeleteModal from '../../components/My/DeleteModal';
 import { WomanIcon } from '../../images/My/icons';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -96,6 +98,8 @@ const Action = styled.div`
   export default function My() {
     const [showLogout, setShowLogout] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    const navigate = useNavigate();
+
   
     const handleLogout = () => {
       setShowLogout(false);
@@ -135,7 +139,7 @@ const Action = styled.div`
         </Card>
 
         <ActionBox>
-          <Action>회원정보 수정</Action>
+          <Action onClick={() => navigate('/imodify')}>회원정보 수정</Action>
           <Action onClick={() => setShowLogout(true)}>로그아웃</Action>
           <Action onClick={() => setShowDelete(true)}>탈퇴하기</Action>
         </ActionBox>
