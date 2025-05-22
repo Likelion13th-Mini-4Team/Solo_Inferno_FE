@@ -1,6 +1,7 @@
 // src/components/Login/LoginForm.jsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const [id, setId] = useState('');
@@ -21,6 +22,12 @@ const LoginForm = () => {
     }
   };
 
+  const JoinLink = styled(Link)`
+    color: #a14cf3;
+    text-decoration: none;
+    font-weight: bold;
+  `;
+
   return (
     <>
       <Title>로그인</Title>
@@ -39,7 +46,7 @@ const LoginForm = () => {
       <LoginButton onClick={handleLogin}>LOGIN</LoginButton>
 
       <JoinText>
-        아이디가 없으신가요? <JoinLink href="#">회원가입</JoinLink>
+        아이디가 없으신가요? <JoinLink to="/signup">회원가입</JoinLink>
       </JoinText>
 
       {popup && (

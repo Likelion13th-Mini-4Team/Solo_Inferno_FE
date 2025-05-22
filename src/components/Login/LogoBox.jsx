@@ -11,5 +11,4 @@ export default LogoBox;
 
 const Logo = styled.img`
   width: 180px;
-  margin-bottom: 40px;
 `;

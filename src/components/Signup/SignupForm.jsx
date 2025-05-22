@@ -37,7 +37,7 @@ const SignupForm = () => {
 
   return (
     <Wrapper>
-      <Logo src={require('../../images/Start/logo.jpg')} alt="logo" />
+      <Logo src={require('../../images/logo.jpg')} alt="logo" />
 
       <FormBox>
         <LabeledRow>
@@ -54,7 +54,7 @@ const SignupForm = () => {
         </LabeledRow>
 
         <InputField label="비밀번호" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호를 입력해주세요." />
-        <InputField label="확인" type="password" value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)} placeholder="비밀번호를 다시 한 번 입력해주세요." />
+        <InputField label="비밀번호 확인" type="password" value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)} placeholder="비밀번호를 다시 한 번 입력해주세요." />
         <InputField label="이름" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름을 입력해주세요." />
         <InputField label="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="사용하실 닉네임을 입력해주세요." />
         <InputField label="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="학번을 입력해주세요. ex) 202302498" />
@@ -122,7 +122,6 @@ const Wrapper = styled.div`
 
 const Logo = styled.img`
   width: 160px;
-  margin-bottom: 24px;
 `;
 
 const FormBox = styled.div`
@@ -131,6 +130,7 @@ const FormBox = styled.div`
   align-items: center;
   width: 100%;
   max-width: 360px;
+  gap: 10px;
 `;
 
 const LabeledRow = styled.div`

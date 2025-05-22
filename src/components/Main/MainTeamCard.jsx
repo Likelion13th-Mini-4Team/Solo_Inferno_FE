@@ -9,7 +9,7 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  max-width: 360px;        // ← 가로 폭 제한
+  max-width: 330px;        // ← 가로 폭 제한
   width: 100%;
   box-sizing: border-box;
 `;
