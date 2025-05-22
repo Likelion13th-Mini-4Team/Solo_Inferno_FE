@@ -13,6 +13,7 @@ import TModify from './pages/TModify';
 import Create from './pages/Create';
 import Chat from './pages/Chat';
 import My from './pages/My';
+import Example from './pages/example';
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
     <BrowserRouter>
     <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Start />} />
+        <Route path="/" element={<Example />} />
+        <Route path="start" element={<Start />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/zero" element={<Zero />} />

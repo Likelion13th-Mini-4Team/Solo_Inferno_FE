@@ -1,8 +1,8 @@
 import React from 'react';
+import SignupForm from '../../components/Signup/SignupForm';
 
-function Signup() {
-  const element = <h1>회원가입페이지</h1>;
-  return element;
-}
+const SignupPage = () => {
+  return <SignupForm />;
+};
 
-export default Signup;
+export default SignupPage;
