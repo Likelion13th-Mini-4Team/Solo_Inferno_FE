@@ -1,15 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsChatSquareHeart } from 'react-icons/bs';
+import { IoChevronBack } from 'react-icons/io5'; // ← 뒤로가기 아이콘
 import Header_logo from '../images/Header/Header_logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header({ messageCount = 3 }) {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
+      <Left onClick={() => navigate(-1)}>
+        <IoChevronBack size={24} />
+      </Left>
+
       <Centered>
-        <Logo src={Header_logo} alt="Tingle 로고" />
+        <Link to="/main">
+          <Logo src={Header_logo} alt="Tingle 로고" />
+        </Link>
       </Centered>
+
       <Right as={Link} to="/match">
         <BsChatSquareHeart size={24} />
         <MessageCount>+{messageCount}</MessageCount>
@@ -62,4 +72,24 @@ const Right = styled.div`
 
 const MessageCount = styled.span`
   color: #000;
+`;
+
+const Left = styled.div`
+  position: absolute;
+  left: 20px;
+  top: 19px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #7F57FA;
+
+  svg {
+    width: 35px;
+    height: 35px;
+  }
+
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;

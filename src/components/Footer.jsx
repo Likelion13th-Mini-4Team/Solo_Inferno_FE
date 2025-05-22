@@ -14,14 +14,14 @@ function Footer() {
   const currentPath = location.pathname;
 
   const isActive = (path) => currentPath === path;
-  const activeColor = '#6636F8';
+  const activeColor = '#F675BE';
   const defaultColor = '#6161FF';
 
   return (
     <FooterContainer>
-      <IconWrapper onClick={() => navigate('/match')}>
-        <HeartFIcon color={isActive('/match') ? activeColor : defaultColor} />
-        <Label style={{ color: isActive('/match') ? activeColor : defaultColor }}>
+      <IconWrapper onClick={() => navigate('/main')}>
+        <HeartFIcon color={isActive('/main') ? activeColor : defaultColor} />
+        <Label style={{ color: isActive('/main') ? activeColor : defaultColor }}>
           매칭하기
         </Label>
       </IconWrapper>
