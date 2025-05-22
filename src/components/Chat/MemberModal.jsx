@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { FaUser } from 'react-icons/fa';
 
 const members = [
-  { name: '배주원', major: '정보통신공학과' },
-  { name: '하예준', major: '컴퓨터공학과' },
-  { name: '남하원', major: '컴퓨터공학과' },
+  { name: '솔로지옥1', major: '정보통신공학과' },
+  { name: '솔로지옥2', major: '컴퓨터공학과' },
+  { name: '솔로지옥3', major: '컴퓨터공학과' },
 ];
 
 export default function MemberModal() {
@@ -23,6 +23,7 @@ export default function MemberModal() {
 }
 
 const MemberRow = styled.div`
+  width: 400px;
   display: flex;
   align-items: center;
   margin-bottom: 16px;
@@ -32,16 +33,19 @@ const MemberRow = styled.div`
   }
 
   svg {
-    margin-right: 12px;
+    margin-right: 15px;
   }
 `;
 
+
+
 const MemberName = styled.div`
   font-weight: bold;
-  margin-right: auto;
+  padding-right: 5px;
+  margin-right: 16px;
   font-size: 16px;
 `;
 
 const MemberMajor = styled.div`
-  font-size: 16px;
+  font-size: 14px;
 `;

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import SaveModal from '../../components/IModify/SaveConfirmModal';
+import { FiChevronDown } from 'react-icons/fi';
+
 
 const Container = styled.div`
   padding: 32px 24px 80px;
@@ -43,10 +45,38 @@ const Select = styled.select`
   width: 100%;
   padding: 10px;
   border: 1.5px solid #7467C1;
+  border-radius: 10px;
   background-color: #f4f0fe;
   color: #333;
   font-size: 14px;
   height: 40px;
+  
+`;
+
+const SelectWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const StyledSelect = styled.select`
+  width: 100%;
+  padding: 10px 40px 10px 10px;  
+  border: 1.5px solid #7467C1;
+  border-radius: 10px;
+  background-color: #f4f0fe;
+  color: #333;
+  font-size: 14px;
+  height: 40px;
+  appearance: none; 
+`;
+
+const ChevronIcon = styled(FiChevronDown)`
+  position: absolute;
+  right: 12px;  
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #7467C1;
 `;
 
 const Input = styled.input`
@@ -55,7 +85,7 @@ const Input = styled.input`
   margin-bottom: 13px;
   border: 1.5px solid #7467C1;
   background-color: #f4f0fe;
-  border-radius: 0;
+  border-radius: 10px;
   font-size: 14px;
   height: 40px;
   color: #333;
@@ -68,10 +98,12 @@ const Input = styled.input`
 const Button = styled.button`
   margin-top: 20px;
   padding: 11px 28px;
-  border-radius: 8px;
-  background-color: #D7CFFF;
-  border: 1.5px solid #7467C1;
+  border-radius: 16px;
+  background-color: #727FF8;
+  border: 1px #727FF8;
+  color: #FFFFFF;
   font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
 `;
 
@@ -95,13 +127,17 @@ export default function IModify() {
 
         <Section>
           <Underlined>학과 변경</Underlined>
-          <Select value={major} onChange={e => setMajor(e.target.value)}>
-            <option value="컴퓨터공학부">컴퓨터공학부</option>
-            <option value="전자공학부">전자공학부</option>
-            <option value="생명공학과">생명공학과</option>
-            <option value="통계학과">통계학과</option>
-          </Select>
+          <SelectWrapper>
+            <StyledSelect value={major} onChange={e => setMajor(e.target.value)}>
+              <option value="컴퓨터공학부">컴퓨터공학부</option>
+              <option value="전자공학부">전자공학부</option>
+              <option value="생명공학과">생명공학과</option>
+              <option value="통계학과">통계학과</option>
+            </StyledSelect>
+            <ChevronIcon size={20} /> 
+          </SelectWrapper>
         </Section>
+
 
         <Section>
           <Underlined>비밀번호 변경</Underlined>

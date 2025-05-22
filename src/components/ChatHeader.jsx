@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Header_logo from '../images/Header/Header_logo.svg';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BeforeIcon, MenuIcon } from '../images/Header/icons';
 import OutModal from '../components/Chat/OutModal';
 import MemberModal from '../components/Chat/MemberModal';
 
+
 export default function ChatHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeModal, setActiveModal] = useState('none');  
-  const navigate = useNavigate(); // 추가
+  const navigate = useNavigate(); 
 
   const handleGoBack = () => {
     navigate(-1); 
@@ -76,7 +77,9 @@ export default function ChatHeader() {
       </LeftIcon>
 
       <LogoWrapper>
+        <Link to="/main">
         <Logo src={Header_logo} alt="Tingle 로고" />
+        </Link>
       </LogoWrapper>
 
       <RightIcon>
@@ -113,7 +116,6 @@ export default function ChatHeader() {
   );
 }
 
-// 스타일 정의
 
 const HeaderContainer = styled.header`
   width: 390px;
