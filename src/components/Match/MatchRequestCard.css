@@ -15,15 +15,26 @@
 .match-buttons {
   display: flex;
   flex-direction: column;
-  gap: 5px;
   align-items: flex-end;
 }
 
-.accept-btn, .reject-btn {
-  width: 35px;
-  height: 19px;
-  font-size: 10px;
-  border-radius: 5px;
-  border: 1px solid #7467C1;
-  background-color: #BCB6FD;
+/* 🔁 기존 accept/reject 삭제됨 */
+
+/* ✅ 새롭게 추가된 팀 보기 버튼 스타일 */
+.view-team-btn {
+  width: 60px;
+  height: 60px;
+  background-color: #a18bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
+.view-team-btn:hover {
+  background-color: #8f75ff;
+}
+

@@ -25,15 +25,14 @@ const Modal = styled.div`
 `;
 
 const CloseButton = styled.button`
-  align-self: flex-end;      // 부모 컨테이너의 세로 방향 끝(오른쪽 상단)으로 정렬 (Flex 컨테이너일 때)
-  font-size: 30px;           // 버튼 텍스트 크기 (보통 X 아이콘)
-  background: none;          // 배경 제거 (투명 버튼)
-  border: none;              // 테두리 제거
-  cursor: pointer;           // 마우스를 올리면 포인터(손가락) 표시
-  float: right;              // 오른쪽으로 띄워서 배치 (position이 없을 경우 사용 가능)
-  margin-top: -8px;          // 버튼을 위로 8px 올림 (간격 조정용)
+  align-self: flex-end;
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  float: right;
+  margin-top: -8px;
 `;
-
 
 const TeamHeader = styled.div`
   display: flex;
@@ -66,14 +65,14 @@ const TeamDesc = styled.div`
 `;
 
 const Table = styled.table`
-  width: 100%;                 // 부모 기준 100%
-  border-spacing: 0 4px;       // 셀 사이 세로 간격 4px
-  margin-top: 16px;            // 위 여백
+  width: 100%;
+  border-spacing: 0 4px;
+  margin-top: 16px;
   font-size: 14px;
-  table-layout: fixed;         // ✅ 셀 너비 고정
+  table-layout: fixed;
 
   th, td {
-    text-align: center;        // ✅ 모두 가운데 정렬
+    text-align: center;
   }
 
   th {
@@ -86,13 +85,10 @@ const Table = styled.table`
     padding: 4px 6px;
   }
 
-  // ✅ 열 너비 고정
-  th:nth-child(1), td:nth-child(1) { width: 35%; } // 닉네임
-  th:nth-child(2), td:nth-child(2) { width: 15%; } // 나이
-  th:nth-child(3), td:nth-child(3) { width: 50%; } // 학과
-
+  th:nth-child(1), td:nth-child(1) { width: 35%; }
+  th:nth-child(2), td:nth-child(2) { width: 15%; }
+  th:nth-child(3), td:nth-child(3) { width: 50%; }
 `;
-
 
 const SectionTitle = styled.div`
   font-weight: bold;
@@ -126,7 +122,7 @@ const ActionButton = styled.button`
   cursor: pointer;
 `;
 
-const MainDetailModal = ({ team, onClose }) => {
+const MainDetailModal = ({ team, onClose, customButtons }) => {
   if (!team) return null;
 
   const members = [
@@ -159,7 +155,7 @@ const MainDetailModal = ({ team, onClose }) => {
           <tbody>
             {members.map((member, idx) => (
               <tr key={idx}>
-                <td>{member.name}</td> {/* 닉네임으로 사용 */}
+                <td>{member.name}</td>
                 <td>{member.age}</td>
                 <td>{member.major}</td>
               </tr>
@@ -174,9 +170,12 @@ const MainDetailModal = ({ team, onClose }) => {
           siu 호날두를 좋아하는 공대생들 입니다!! siu
         </Paragraph>
 
-        <ButtonContainer>
-          <ActionButton>매칭하기</ActionButton>
-        </ButtonContainer>
+        {/* ✅ 버튼 선택적으로 렌더링 */}
+        {customButtons ? customButtons : (
+          <ButtonContainer>
+            <ActionButton>매칭하기</ActionButton>
+          </ButtonContainer>
+        )}
       </Modal>
     </Overlay>
   );

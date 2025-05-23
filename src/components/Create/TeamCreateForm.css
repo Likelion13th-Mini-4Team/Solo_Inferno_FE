@@ -51,23 +51,162 @@ textarea {
   cursor: pointer;
 }
 
-.emoji-btn {
-  background-color: #a18bff;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
 .submit-btn {
-  margin: 24px auto 0;
   background-color: #a18bff;
   color: white;
   border: none;
   padding: 12px 32px;
   border-radius: 20px;
   font-size: 16px;
+  cursor: pointer;
+  margin-top: 8px; /* ✅ 기존보다 위로 올림 (24px → 8px) */
+  align-self: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #ede7ff;
+  padding: 24px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.modal-input-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.modal-input-group input {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #a18bff;
+  font-size: 14px;
+}
+
+.invite-confirm-btn {
+  background-color: #a18bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-close-btn {
+  background: transparent;
+  color: #444;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-content.confirm,
+.modal-content.create,
+.modal-content.success {
+  background-color: #e3dfff;
+  padding: 28px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.confirm-text,
+.create-text,
+.success-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.confirm-btn,
+.create-cancel-btn,
+.create-confirm-btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #a18bff;
+  color: white;
+  border: none;
+}
+
+.create-cancel-btn {
+  background: white;
+  border: 2px solid #a18bff;
+  color: #6c50ff;
+}
+
+.create-confirm-btn {
+  background-color: #a18bff;
+  color: white;
+  border: none;
+}
+
+.create-btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #e8e0ff;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 260px;
+}
+
+.modal-message {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.modal-button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  border: 1px solid #7E5EFF;
+  background: #a18bff;
+  color: white;
+  margin: 0 8px;
   cursor: pointer;
 }

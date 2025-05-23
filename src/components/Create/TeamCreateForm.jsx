@@ -1,42 +1,216 @@
-// src/components/Create/TeamCreateForm.jsx
-
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './TeamCreateForm.css';
 
 function TeamCreateForm() {
+  const navigate = useNavigate();
+
+  const [teamName, setTeamName] = useState('');
+  const [teamDesc, setTeamDesc] = useState('');
+  const [teamQuote, setTeamQuote] = useState('');
+  const [members, setMembers] = useState(['이유준']); // 고정 멤버
+  const [inviteId, setInviteId] = useState('');
+
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null);
+
+  const handleInvite = () => {
+    if (!inviteId) return;
+
+    const validMembers = ['하예준', '남하원', '펭수', '홍길동'];
+    if (!validMembers.includes(inviteId)) {
+      setIsInviteModalOpen(false);
+      setIsErrorModalOpen(true);
+      setInviteId('');
+      return;
+    }
+
+    if (members.includes(inviteId)) {
+      setIsInviteModalOpen(false);
+      setInviteId('');
+      return;
+    }
+
+    if (members.length >= 3) {
+      setIsInviteModalOpen(false);
+      setModalType('limit');
+      setInviteId('');
+      return;
+    }
+
+    setMembers([...members, inviteId]);
+    setIsInviteModalOpen(false);
+    setIsConfirmModalOpen(true);
+    setInviteId('');
+  };
+
+  const handleCreate = () => {
+    setIsCreateModalOpen(false);
+    setIsSuccessModalOpen(true);
+  };
+
+  const handleNavigateToManage = () => {
+    const newTeam = {
+      id: Date.now(),
+      name: teamName,
+      description: teamDesc,
+      quote: teamQuote,
+    };
+    navigate('/manage', { state: { newTeam } });
+  };
+
   return (
     <div className="create-form">
       <div className="form-group">
         <label>팀 이름</label>
-        <input type="text" placeholder="팀 이름을 입력해주세요." />
+        <input
+          type="text"
+          placeholder="팀 이름을 입력해주세요."
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+        />
       </div>
 
       <div className="form-group">
         <label>팀 소개 (한 줄 소개)</label>
-        <input type="text" placeholder="우리 팀을 한 줄로 소개해보세요!" />
+        <input
+          type="text"
+          placeholder="우리 팀을 한 줄로 소개해보세요!"
+          value={teamDesc}
+          onChange={(e) => setTeamDesc(e.target.value)}
+        />
       </div>
 
       <div className="form-group">
         <label>팀 한마디</label>
-        <textarea placeholder="팀 분위기나 하고 싶은 말 등 
-자유롭게 입력하세요!" />
+        <textarea
+          placeholder="팀 분위기나 하고 싶은 말 등 
+자유롭게 입력하세요!"
+          value={teamQuote}
+          onChange={(e) => setTeamQuote(e.target.value)}
+        />
       </div>
 
       <div className="form-group">
-        <label>멤버 추가 (최대 3명)</label>
-        <div className="member-list">
-          <div className="member-tag">이유준</div>
-          <div className="member-tag">하예준</div>
-          <button className="invite-btn">+ 멤버 초대하기</button>
+        <label>멤버 추가 (최대 2명 초대 가능)</label>
+        <div className="member-section">
+          <div className="member-list">
+            {members.map((member, index) => (
+              <div className="member-tag" key={index}>{member}</div>
+            ))}
+          </div>
+          <button
+            className="invite-btn"
+            onClick={() => {
+              if (members.length >= 3) {
+                setModalType('limit');
+              } else {
+                setIsInviteModalOpen(true);
+              }
+            }}
+          >
+            + 멤버 초대하기
+          </button>
         </div>
       </div>
 
       <div className="form-group">
-        <label>팀 이모지</label>
-        <button className="emoji-btn">팀을 대표할 이미지를 선택해주세요!</button>
+        <button className="submit-btn" onClick={() => setIsCreateModalOpen(true)}>
+          팀 생성하기
+        </button>
       </div>
 
-      <button className="submit-btn">팀 생성하기</button>
+      {/* 초대 모달 */}
+      {isInviteModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>멤버 초대하기</h3>
+            <div className="modal-input-group">
+              <input
+                type="text"
+                placeholder="닉네임을 입력해주세요."
+                value={inviteId}
+                onChange={(e) => setInviteId(e.target.value)}
+              />
+              <button className="invite-confirm-btn" onClick={handleInvite}>
+                초대하기
+              </button>
+            </div>
+            <button className="modal-close-btn" onClick={() => setIsInviteModalOpen(false)}>
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 초대 완료 모달 */}
+      {isConfirmModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content confirm">
+            <p className="confirm-text">멤버 초대요청을 완료했습니다.</p>
+            <button className="confirm-btn" onClick={() => setIsConfirmModalOpen(false)}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 존재하지 않는 멤버 모달 */}
+      {isErrorModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content error">
+            <p className="error-text">존재하지 않는 멤버입니다.</p>
+            <button className="confirm-btn" onClick={() => setIsErrorModalOpen(false)}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ 정원 초과 모달 (수정 페이지와 동일 스타일) */}
+      {modalType === 'limit' && (
+        <div className="modal-backdrop">
+          <div className="modal-box">
+            <p className="modal-message">이미 정원이 꽉 찼습니다!</p>
+            <button className="modal-button" onClick={() => setModalType(null)}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 팀 생성 확인 모달 */}
+      {isCreateModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content create">
+            <p className="create-text">팀을 생성하시겠습니까?</p>
+            <div className="create-btn-group">
+              <button className="create-cancel-btn" onClick={() => setIsCreateModalOpen(false)}>
+                취소
+              </button>
+              <button className="create-confirm-btn" onClick={handleCreate}>
+                생성
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 팀 생성 완료 모달 */}
+      {isSuccessModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content success">
+            <p className="success-text">팀 생성이 완료되었습니다!</p>
+            <button className="confirm-btn" onClick={handleNavigateToManage}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

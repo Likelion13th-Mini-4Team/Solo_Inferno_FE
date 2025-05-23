@@ -1,0 +1,161 @@
+.modify-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modify-container {
+  width: 100%;
+  max-width: 350px;
+  padding: 24px 16px 100px;
+  font-family: Pretendard;
+  box-sizing: border-box;
+}
+
+.page-title {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.delete-btn {
+  background-color: white;
+  border: 1px solid #d9534f;
+  color: #d9534f;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modify-card {
+  background-color: #e8e0ff;
+  border: 2px solid #a18bff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.text-input {
+  border: none;
+  border-bottom: 1px solid #a18bff;
+  background-color: transparent;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.member-list {
+  margin: 16px 0;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.invite-btn {
+  background-color: #a18bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #7e5eff;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 36px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.member-table {
+  width: 100%;
+  border-spacing: 0 6px;
+  margin: 20px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.member-table th {
+  font-weight: bold;
+  color: #333;
+  padding-bottom: 8px;
+}
+
+.member-table td {
+  padding: 4px 6px;
+}
+
+/* 모달 */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #e8e0ff;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 260px;
+}
+
+.modal-message {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.modal-button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  border: 1px solid #7E5EFF;
+  background: #a18bff;
+  color: white;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.modal-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.modal-button.red {
+  color: red;
+  background: white;
+  border: 1px solid red;
+}
+
+.invite-input {
+  padding: 8px 10px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  width: 80%;
+}
