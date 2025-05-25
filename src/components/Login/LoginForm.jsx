@@ -1,32 +1,49 @@
 // src/components/Login/LoginForm.jsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+// Define styled Link component once, outside of the render
+const JoinLink = styled(Link)`
+  color: #a14cf3;
+  text-decoration: none;
+  font-weight: bold;
+`;
 
 const LoginForm = () => {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const [error, setError] = useState('');
   const [popup, setPopup] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (id === 'admin' && pw === '1234') {
+  const handleLogin = async () => {
+    if (!id || !pw) {
+      setError('아이디와 비밀번호를 모두 입력해주세요.');
+      setPopup(true);
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        'http://3.34.1.245:8080/api/auth/login',
+        { userId: id, password: pw },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      const token = res.data.token; // or res.data.accessToken
+      localStorage.setItem('token', token);
       alert('로그인 성공!');
-      setError('');
-    } else {
-      if (id !== 'admin') {
-        setPopup(true);
-      } else {
-        setError('올바르지 않은 비밀번호입니다.');
-      }
+      navigate('/main');
+    } catch (err) {
+      console.error('로그인 실패:', err.response?.data || err.message);
+      setPopup(true);
+      setError('아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   };
-
-  const JoinLink = styled(Link)`
-    color: #a14cf3;
-    text-decoration: none;
-    font-weight: bold;
-  `;
 
   return (
     <>
@@ -34,12 +51,21 @@ const LoginForm = () => {
 
       <InputWrapper>
         <Label>ID</Label>
-        <Input value={id} onChange={(e) => setId(e.target.value)} placeholder="아이디를 입력해주세요." />
+        <Input
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          placeholder="아이디를 입력해주세요."
+        />
       </InputWrapper>
 
       <InputWrapper>
         <Label>PW</Label>
-        <Input type="password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="비밀번호를 입력해주세요." />
+        <Input
+          type="password"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+          placeholder="비밀번호를 입력해주세요."
+        />
         {error && <Error>{error}</Error>}
       </InputWrapper>
 
@@ -61,7 +87,7 @@ const LoginForm = () => {
 
 export default LoginForm;
 
-// 스타일
+// Styles
 const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 24px;
@@ -115,12 +141,6 @@ const LoginButton = styled.button`
 const JoinText = styled.p`
   font-size: 14px;
   margin-top: 24px;
-`;
-
-const JoinLink = styled.a`
-  color: #a14cf3;
-  text-decoration: none;
-  font-weight: bold;
 `;
 
 const Modal = styled.div`
