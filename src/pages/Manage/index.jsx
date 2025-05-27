@@ -1,93 +1,54 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // ✅ useLocation 추가
+// src/pages/Manage/index.jsx
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './ManagePage.css';
+import EmptyTeamMessage from '../../components/Manage/EmptyTeamMessage';
+import TeamManageForm from '../../components/Manage/TeamManageForm';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import TeamManageForm from '../../components/Manage/TeamManageForm';
-import './ManagePage.css';
 
 function ManagePage() {
-  const [selectedTeamId, setSelectedTeamId] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // ✅ 삭제된 팀과 생성된 팀 받기
-  const { deletedTeamId, newTeam } = location.state || {};
-
-  const teams = [
-    { id: 1, name: '솔로지옥 시즌 1', description: '저희는 이게 매력적 입니다~!', quote: '진짜 재밌다 ㅋ' },
-    { id: 2, name: '솔로지옥 시즌 2', description: '저희는 이게 매력적 입니다~!', quote: '진짜 재밌다 ㅋ' },
-    { id: 3, name: '솔로지옥 시즌 3', description: '저희는 이게 매력적 입니다~!', quote: '진짜 재밌다 ㅋ' },
-  ];
-
-  // ✅ 삭제된 팀은 제외, 생성된 팀은 추가
-  let updatedTeams = [...teams];
-
-  if (deletedTeamId) {
-    updatedTeams = updatedTeams.filter((team) => team.id !== deletedTeamId);
-  }
-
-  if (newTeam) {
-    updatedTeams.push(newTeam);
-  }
-
-  const handleEditToggle = () => {
-    if (isEditMode) {
-      setIsEditMode(false);
-      setSelectedTeamId(null);
-    } else {
-      setIsEditMode(true);
-    }
-  };
-
-  const handleTeamSelect = (teamId) => {
-    if (isEditMode) setSelectedTeamId(teamId);
-  };
-
-  const handleFinalButton = () => {
-    if (isEditMode) {
-      if (selectedTeamId) {
-        navigate('/tmodify', {
-          state: {
-            teamId: selectedTeamId,
-          },
-        });
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    axios.get('http://3.34.1.245:8080/api/my-team', {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    } else {
-      navigate('/create');
-    }
-  };
+    })
+      .then((res) => {
+        setTeams(res.data.teams || []);
+      })
+      .catch((err) => {
+        console.error('팀 목록 불러오기 실패:', err);
+        setError('팀 목록을 불러오는 데 실패했습니다.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="manage-container">불러오는 중...</div>;
+  if (error) return <div className="manage-container">{error}</div>;
 
   return (
-    <div className="manage-wrapper" style={{ paddingTop: '24px', paddingBottom: '100px' }}>
+    <div className="manage-wrapper">
       <Header />
       <main className="manage-container">
         <div className="edit-wrapper">
-          <button className="edit-btn" onClick={handleEditToggle}>
-            {isEditMode ? '수정 취소' : '팀 수정하기'}
-          </button>
+          <button className="edit-btn">팀 수정하기</button>
         </div>
-
-        {isEditMode && (
-          <p className="edit-tip">수정을 원하는 팀을 선택해주세요.</p>
+        {teams.length === 0 ? (
+          <EmptyTeamMessage />
+        ) : (
+          teams.map((team) => (
+            <TeamManageForm key={team.id} team={team} />
+          ))
         )}
-
-        {updatedTeams.map((team) => (
-          <TeamManageForm
-            key={team.id}
-            team={team}
-            isSelected={team.id === selectedTeamId}
-            onSelect={() => handleTeamSelect(team.id)}
-          />
-        ))}
-
-        <button
-          className="create-btn"
-          onClick={handleFinalButton}
-          disabled={isEditMode && !selectedTeamId}
-        >
-          {isEditMode ? '수정하기' : '팀 생성하기'}
-        </button>
+        <button className="create-btn">팀 생성하기</button>
       </main>
       <Footer />
     </div>
