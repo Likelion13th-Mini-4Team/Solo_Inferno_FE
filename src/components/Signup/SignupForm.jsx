@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import InputField from './InputField';
 import SelectField from './SelectField';
 import GenderSelect from './GenderSelect';
@@ -19,21 +20,70 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [popup, setPopup] = useState('');
 
-  const handleCheckId = () => {
-    if (id === 'admin') {
-      setPopup('이미 사용 중인 아이디입니다.');
-    } else {
-      setPopup('사용 가능한 아이디입니다.');
-    }
+  // Handle signup submission
+ const handleSignup = async () => {
+  // Basic validation
+  if (!id || !password || !confirmPw || !name || !nickname || !studentId || !department || !gender || !birthYear || !email) {
+    setPopup('모든 필드를 입력해주세요.');
+    return;
+  }
+  if (password !== confirmPw) {
+    setPopup('비밀번호가 일치하지 않습니다.');
+    return;
+  }
+
+  const requestBody = {
+    userId: id,
+    password1: password,     // ✅ 백엔드 DTO에 맞게 수정
+    password2: confirmPw,    // ✅ 백엔드 DTO에 맞게 수정
+    name,
+    nickname,
+    studentId,
+    department,
+    gender,
+    birthYear,
+    email,
   };
 
-  const handleVerifyEmail = () => {
-    if (!email.includes('@hufs.ac.kr')) {
-      setPopup('유효한 학교 이메일을 입력해주세요.\n(예: xxx@hufs.ac.kr)');
-    } else {
-      setPopup('학교 이메일로 인증 링크를 보냈습니다.\n확인 후 인증을 완료해주세요.');
+  try {
+    const response = await axios.post(
+      'http://3.34.1.245:8080/api/auth/signup',
+      requestBody,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    if (response.status === 200 || response.status === 201) {
+      setPopup('회원가입이 성공적으로 완료되었습니다.\n이메일 인증 후 로그인해주세요.');
     }
+  } catch (error) {
+    console.error('회원가입 오류:', error);
+    setPopup('회원가입에 실패했습니다. 다시 시도해주세요.');
+  }
+};
+
+
+  const handleCheckId = () => {
+    // ID 체크 API 연동 가능
+    setPopup(id === 'admin' ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
   };
+
+const handleVerifyEmail = async () => {
+  if (!email.includes('@hufs.ac.kr')) {
+    setPopup('유효한 학교 이메일을 입력해주세요.\n(예: xxx@hufs.ac.kr)');
+    return;
+  }
+
+  try {
+  await axios.get('http://3.34.1.245:8080/api/auth/send-code', {
+    params: { email: email },
+  });
+  setPopup('학교 이메일로 인증 링크를 보냈습니다.\n확인 후 인증을 완료해주세요.');
+} catch (err) {
+  setPopup('이메일 인증 요청에 실패했습니다.');
+  console.error(err);
+}
+
+};
+
 
   return (
     <Wrapper>
@@ -58,9 +108,12 @@ const SignupForm = () => {
         <InputField label="이름" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름을 입력해주세요." />
         <InputField label="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="사용하실 닉네임을 입력해주세요." />
         <InputField label="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="학번을 입력해주세요. ex) 202302498" />
-        <SelectField label="학과" value={department} onChange={(e) => setDepartment(e.target.value)} options={
-          [
-            "AI데이터융합학부",
+        <SelectField
+          label="학과"
+          value={department}
+          onChange={(e) => setDepartment(e.target.value)}
+          options={[
+           "AI데이터융합학부",
             "GBT학부",
             "Finance & AI융합학부",
             "그리스·불가리아학과",
@@ -93,14 +146,13 @@ const SignupForm = () => {
             "화학과",
             "컴퓨터공학부",
             "자유전공학부",
-          ]
-
-        }
-         />
+          ]}
+        />
         <GenderSelect gender={gender} onSelect={setGender} />
         <InputField label="출생년도" value={birthYear} onChange={(e) => setBirthYear(e.target.value)} placeholder="출생년도를 입력해주세요. ex) 2004" />
         <EmailVerify email={email} onChange={(e) => setEmail(e.target.value)} onVerify={handleVerifyEmail} />
-        <SubmitButton>완료</SubmitButton>
+
+        <SubmitButton type="button" onClick={handleSignup}>완료</SubmitButton>
       </FormBox>
 
       {popup && <Popup message={popup} onClose={() => setPopup('')} />}
@@ -148,7 +200,7 @@ const IdRow = styled.div`
   display: flex;
   width: 320px;
   gap: 8px;
-  margin: 0
+  margin: 0;
 `;
 
 const InputOnly = styled.input`

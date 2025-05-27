@@ -5,8 +5,8 @@ const GenderSelect = ({ gender, onSelect }) => (
   <FieldWrapper>
     <Label>성별</Label>
     <GenderWrapper>
-      <GenderButton selected={gender === '남'} onClick={() => onSelect('남')}>남</GenderButton>
-      <GenderButton selected={gender === '여'} onClick={() => onSelect('여')}>여</GenderButton>
+      <GenderButton selected={gender === 'MALE'} onClick={() => onSelect('MALE')}>남</GenderButton>
+      <GenderButton selected={gender === 'FEMALE'} onClick={() => onSelect('FEMALE')}>여</GenderButton>
     </GenderWrapper>
   </FieldWrapper>
 );
