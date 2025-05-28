@@ -7,10 +7,7 @@ import CatImage from '../../images/Chat/cat.svg';
 
 export default function Chat() {
   const [messages, setMessages] = useState([
-    { id: 1, sender: '고냥이', text: '안녕하세요!', isMine: false, time: '오후 8:54' },
-    { id: 2, sender: '나', text: '반갑습니다!', isMine: true, time: '오후 8:55' },
-    { id: 3, sender: '개냥이', text: '반가워요!', isMine: false, time: '오후 8:56' },
-    { id: 4, sender: '나', text: '뭐하고 계신가여?', isMine: true, time: '오후 8:57' }
+ 
   ]);
 
   const [input, setInput] = useState('');
@@ -19,7 +16,7 @@ export default function Chat() {
     if (input.trim() === '') return;
     setMessages([
       ...messages,
-      { id: Date.now(), sender: '나', text: input, isMine: true, time: '오후 9:00' }
+      { id: Date.now(), sender: '나', text: input, isMine: true,  }
     ]);
     setInput('');
   };
