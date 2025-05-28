@@ -124,7 +124,7 @@ const SignupForm = () => {
               onChange={(e) => setId(e.target.value)}
               placeholder="아이디를 입력해주세요."
             />
-            <SmallButton type="button" onClick={handleCheckId}>중복확인</SmallButton>
+            <SmallButton1 type="button" onClick={handleCheckId}>중복확인</SmallButton1>
           </IdRow>
         </LabeledRow>
 
@@ -155,9 +155,9 @@ const SignupForm = () => {
             label="인증코드"
             value={emailCode}
             onChange={(e) => setEmailCode(e.target.value)}
-            placeholder="이메일로 받은 인증 코드를 입력해주세요."
+            placeholder="인증 코드를 입력해주세요."
           />
-          <SmallButton type="button" onClick={handleVerifyCode}>인증 확인</SmallButton>
+          <SmallButton2 type="button" onClick={handleVerifyCode}>인증 확인</SmallButton2>
         </VerifyBox>
 
         <SubmitButton type="button" onClick={handleSignup}>완료</SubmitButton>
@@ -220,7 +220,7 @@ const InputOnly = styled.input`
   font-size: 14px;
 `;
 
-const SmallButton = styled.button`
+const SmallButton1 = styled.button`
   width: 80px;
   padding: 10px 14px;
   background-color: #aab3ff;
@@ -231,6 +231,20 @@ const SmallButton = styled.button`
   font-size: 14px;
   white-space: nowrap;
   height: 40px;
+`;
+
+const SmallButton2 = styled.button`
+  width: 80px;
+  padding: 10px 14px;
+  background-color: #aab3ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  height: 40px;
+  margin-top: 22px;
 `;
 
 const SubmitButton = styled.button`

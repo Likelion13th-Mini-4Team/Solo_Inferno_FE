@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './TeamCreateForm.css';
 
 function TeamCreateForm() {
@@ -8,7 +9,7 @@ function TeamCreateForm() {
   const [teamName, setTeamName] = useState('');
   const [teamDesc, setTeamDesc] = useState('');
   const [teamQuote, setTeamQuote] = useState('');
-  const [members, setMembers] = useState(['이유준']); // 고정 멤버
+  const [members, setMembers] = useState(['이유준']);
   const [inviteId, setInviteId] = useState('');
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -18,10 +19,18 @@ function TeamCreateForm() {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
+  const nicknameToId = {
+    이유준: 1,
+    하예준: 2,
+    남하원: 3,
+    펭수: 4,
+    홍길동: 5,
+  };
+
   const handleInvite = () => {
     if (!inviteId) return;
 
-    const validMembers = ['하예준', '남하원', '펭수', '홍길동'];
+    const validMembers = Object.keys(nicknameToId);
     if (!validMembers.includes(inviteId)) {
       setIsInviteModalOpen(false);
       setIsErrorModalOpen(true);
@@ -48,23 +57,44 @@ function TeamCreateForm() {
     setInviteId('');
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     setIsCreateModalOpen(false);
-    setIsSuccessModalOpen(true);
+
+    const token = localStorage.getItem('accessToken');
+    const memberIds = members.map(nick => nicknameToId[nick]).filter(Boolean);
+
+    try {
+      const res = await axios.post(
+        'http://3.34.1.245:8080/api/teams/create',
+        {
+          name: teamName,
+          description: teamDesc,
+          tagline: teamQuote,
+          memberIds: memberIds,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        setIsSuccessModalOpen(true);
+      }
+    } catch (err) {
+      console.error('팀 생성 실패:', err);
+      alert(err.response?.data?.message || '팀 생성에 실패했습니다.');
+    }
   };
 
   const handleNavigateToManage = () => {
-    const newTeam = {
-      id: Date.now(),
-      name: teamName,
-      description: teamDesc,
-      quote: teamQuote,
-    };
-    navigate('/manage', { state: { newTeam } });
+    navigate('/manage');
   };
 
   return (
     <div className="create-form">
+      {/* 기본 입력 */}
       <div className="form-group">
         <label>팀 이름</label>
         <input
@@ -88,13 +118,13 @@ function TeamCreateForm() {
       <div className="form-group">
         <label>팀 한마디</label>
         <textarea
-          placeholder="팀 분위기나 하고 싶은 말 등 
-자유롭게 입력하세요!"
+          placeholder="팀 분위기나 하고 싶은 말 등을 입력하세요!"
           value={teamQuote}
           onChange={(e) => setTeamQuote(e.target.value)}
         />
       </div>
 
+      {/* 멤버 추가 */}
       <div className="form-group">
         <label>멤버 추가 (최대 2명 초대 가능)</label>
         <div className="member-section">
@@ -118,13 +148,14 @@ function TeamCreateForm() {
         </div>
       </div>
 
+      {/* 생성 버튼 */}
       <div className="form-group">
         <button className="submit-btn" onClick={() => setIsCreateModalOpen(true)}>
           팀 생성하기
         </button>
       </div>
 
-      {/* 초대 모달 */}
+      {/* 모달들 */}
       {isInviteModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -147,7 +178,6 @@ function TeamCreateForm() {
         </div>
       )}
 
-      {/* 초대 완료 모달 */}
       {isConfirmModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content confirm">
@@ -159,7 +189,6 @@ function TeamCreateForm() {
         </div>
       )}
 
-      {/* 존재하지 않는 멤버 모달 */}
       {isErrorModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content error">
@@ -171,7 +200,6 @@ function TeamCreateForm() {
         </div>
       )}
 
-      {/* ✅ 정원 초과 모달 (수정 페이지와 동일 스타일) */}
       {modalType === 'limit' && (
         <div className="modal-backdrop">
           <div className="modal-box">
@@ -183,7 +211,6 @@ function TeamCreateForm() {
         </div>
       )}
 
-      {/* 팀 생성 확인 모달 */}
       {isCreateModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content create">
@@ -200,7 +227,6 @@ function TeamCreateForm() {
         </div>
       )}
 
-      {/* 팀 생성 완료 모달 */}
       {isSuccessModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content success">

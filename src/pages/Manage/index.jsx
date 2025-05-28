@@ -14,7 +14,7 @@ function ManagePage() {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    axios.get('http://3.34.1.245:8080/api/my-team', {
+    axios.get('http://3.34.1.245:8080/api/teams', {
       headers: {
         Authorization: `Bearer ${token}`
       }

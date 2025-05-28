@@ -38,10 +38,12 @@ const LoginForm = () => {
 
       console.log(res.data); // ✅ 여기로 옮김
 
-      const token = res.data.token;
-      localStorage.setItem('token', token);
+      const token = res.data.accessToken;
+      localStorage.setItem('accessToken', token);
       alert('로그인 성공!');
       navigate('/main');
+
+
     } catch (err) {
       console.error('로그인 실패:', err.response?.data || err.message);
       setPopup(true);
