@@ -1,119 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import MainTeamCard from '../../components/Main/MainTeamCard';
 import MainDetailModal from '../../components/Main/MainDetailModal';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+// 이미지 import
+import Dog from '../../images/emojis/Dog.png';
+import Cat from '../../images/emojis/Cat.png';
+import Rabbit from '../../images/emojis/Rabbit.png';
+import Tiger from '../../images/emojis/Tiger.png';
+
+// 이미지 매핑
+const imageMap = {
+  'Dog.png': Dog,
+  'Cat.png': Cat,
+  'Rabbit.png': Rabbit,
+  'Tiger.png': Tiger
+};
+
 const MainPage = () => {
-  const [teamList, setTeamList] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [modalLoading, setModalLoading] = useState(false);
 
-  // ✅ 전체 팀 목록 가져오기
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-
-    if (token) {
-      try {
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        console.log("Decoded JWT Payload:", decoded);
-      } catch (e) {
-        console.error("JWT 디코딩 실패", e);
-      }
-    }
-
-    axios.get('http://3.34.1.245:8080/api/teams', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then((res) => {
-        const teams = res.data.teams || [];
-        setTeamList(teams);
-      })
-      .catch((err) => {
-        console.error("팀 목록 불러오기 실패", err);
-        setError('팀 목록을 불러오는 데 실패했습니다.');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  // ✅ 특정 팀 상세 정보 가져오기
-  const handleTeamClick = (team) => {
-    setModalLoading(true);
-    const token = localStorage.getItem('accessToken');
-    axios.get('http://3.34.1.245:8080/api/teams/teamId', {
-      params: { teamId: team.id },
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then((res) => {
-        const data = res.data;
-        setSelectedTeam({
-          name: data.teamName,
-          image: data.emoji,
-          팀소개: data['팀 소개'],
-          members: data.members.map(member => ({
-            닉네임: member.이름,
-            학번: member.학번,
-            학과: member.학과
-          }))
-        });
-      })
-      .catch((err) => {
-        console.error('팀 상세정보 불러오기 실패', err);
-        alert('팀 정보를 불러오는 데 실패했습니다.');
-      })
-      .finally(() => {
-        setModalLoading(false);
-      });
-  };
-
-  if (loading) {
-    return <div style={{ textAlign: 'center', marginTop: '50px' }}>팀 목록을 불러오는 중...</div>;
-  }
-
-  if (error) {
-    return <div style={{ textAlign: 'center', marginTop: '50px', color: 'red' }}>{error}</div>;
-  }
+  const teamList = [
+    { id: 1, name: '우주최강팀', desc: '호날두, 메시, 이건휘 레츠고', image: 'Dog.png' },
+    { id: 2, name: '드림팀', desc: '꿈이 많은 아이들입니다.', image: 'Cat.png' },
+    { id: 3, name: '토끼팀', desc: '달리기 선출 모임', image: 'Rabbit.png' },
+    { id: 4, name: '호랑이팀', desc: '98년생 10년생 레츠고', image: 'Tiger.png' }
+  ];
 
   return (
     <div style={{ backgroundColor: '#f9f9f9' }}>
-      <div style={{ maxWidth: '390px', margin: '0 auto', minHeight: '100vh', backgroundColor: '#ffffff' }}>
+      <div
+        style={{
+          maxWidth: '390px',
+          margin: '0 auto',
+          minHeight: '100vh',
+          backgroundColor: '#ffffff'
+        }}
+      >
         <Header />
 
+        {/* 팀 상세 보기 (모달처럼 보이되 전체 페이지로 대체됨) */}
         {selectedTeam && (
           <MainDetailModal
-            team={selectedTeam}
+            team={{ ...selectedTeam, image: imageMap[selectedTeam.image] }}
             onClose={() => setSelectedTeam(null)}
           />
         )}
 
+        {/* 팀 리스트 */}
         {!selectedTeam && (
           <div style={{ padding: '16px', paddingBottom: '80px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
-              <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>🔍</button>
+              <button
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0
+                }}
+              >
+              </button>
             </div>
 
-            {teamList.map(team => (
+            {teamList.map((team) => (
               <MainTeamCard
                 key={team.id}
-                team={team}
-                onClick={() => handleTeamClick(team)}
+                team={{ ...team, image: imageMap[team.image] }}
+                onClick={() => setSelectedTeam(team)}
               />
             ))}
-
-            {teamList.length === 0 && (
-              <div style={{ textAlign: 'center', marginTop: '40px', color: '#666' }}>
-                아직 등록된 팀이 없어요.
-              </div>
-            )}
           </div>
         )}
 

@@ -5,7 +5,7 @@ import { IoChevronBack } from 'react-icons/io5'; // ← 뒤로가기 아이콘
 import Header_logo from '../images/Header/Header_logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Header({ messageCount = 3 }) {
+function Header({ messageCount = 2 }) {
   const navigate = useNavigate();
 
   return (

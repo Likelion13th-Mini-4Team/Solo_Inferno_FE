@@ -1,15 +1,18 @@
+/* 전체 팀 생성 폼 컨테이너 */
 .create-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* 입력 필드 그룹 간 간격 조절 */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+/* 모든 input과 textarea 기본 스타일 */
 input,
 textarea {
   border: 1px solid #ccc;
@@ -18,11 +21,9 @@ textarea {
   font-size: 16px;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
 
+
+/* 초대된 멤버 리스트 레이아웃 */
 .member-list {
   display: flex;
   align-items: center;
@@ -30,6 +31,7 @@ textarea {
   flex-wrap: wrap;
 }
 
+/* 개별 멤버 태그 스타일 */
 .member-tag {
   background-color: #ece3ff;
   padding: 8px 16px;
@@ -41,6 +43,7 @@ textarea {
   height: 44px;
 }
 
+/* 초대 버튼 */
 .invite-btn {
   background-color: #a18bff;
   color: white;
@@ -51,6 +54,7 @@ textarea {
   cursor: pointer;
 }
 
+/* 팀 생성 버튼 */
 .submit-btn {
   background-color: #a18bff;
   color: white;
@@ -59,10 +63,11 @@ textarea {
   border-radius: 20px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 8px; /* ✅ 기존보다 위로 올림 (24px → 8px) */
+  margin-top: 8px;
   align-self: center;
 }
 
+/* 모달 오버레이 전체 배경 */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -76,6 +81,7 @@ textarea {
   z-index: 999;
 }
 
+/* 모달 콘텐츠 박스 */
 .modal-content {
   background-color: #ede7ff;
   padding: 24px 20px;
@@ -86,6 +92,7 @@ textarea {
   text-align: center;
 }
 
+/* 초대 입력칸 내부 구조 */
 .modal-input-group {
   display: flex;
   gap: 8px;
@@ -95,6 +102,7 @@ textarea {
   margin-bottom: 14px;
 }
 
+/* 초대 입력창 */
 .modal-input-group input {
   flex: 1;
   min-width: 140px;
@@ -104,6 +112,7 @@ textarea {
   font-size: 14px;
 }
 
+/* 초대 확인 버튼 */
 .invite-confirm-btn {
   background-color: #a18bff;
   color: white;
@@ -114,6 +123,7 @@ textarea {
   cursor: pointer;
 }
 
+/* 모달 닫기 버튼 */
 .modal-close-btn {
   background: transparent;
   color: #444;
@@ -123,6 +133,7 @@ textarea {
   margin-top: 10px;
 }
 
+/* 확인/생성/완료 모달 스타일 */
 .modal-content.confirm,
 .modal-content.create,
 .modal-content.success {
@@ -135,6 +146,7 @@ textarea {
   text-align: center;
 }
 
+/* 모달 타이틀 텍스트 스타일 */
 .confirm-text,
 .create-text,
 .success-text {
@@ -143,6 +155,7 @@ textarea {
   margin-bottom: 20px;
 }
 
+/* 모달 내 버튼들 (확인/취소/생성) */
 .confirm-btn,
 .create-cancel-btn,
 .create-confirm-btn {
@@ -152,30 +165,35 @@ textarea {
   cursor: pointer;
 }
 
+/* 확인 버튼 스타일 */
 .confirm-btn {
   background-color: #a18bff;
   color: white;
   border: none;
 }
 
+/* 생성 취소 버튼 (테두리만) */
 .create-cancel-btn {
   background: white;
   border: 2px solid #a18bff;
   color: #6c50ff;
 }
 
+/* 생성 확인 버튼 */
 .create-confirm-btn {
   background-color: #a18bff;
   color: white;
   border: none;
 }
 
+/* 모달 내 버튼 그룹 정렬 */
 .create-btn-group {
   display: flex;
   justify-content: center;
   gap: 12px;
 }
 
+/* 경고/정원초과 모달 전체 배경 */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -186,6 +204,7 @@ textarea {
   z-index: 1000;
 }
 
+/* 정원 초과 박스 스타일 */
 .modal-box {
   background: #e8e0ff;
   padding: 32px;
@@ -194,12 +213,14 @@ textarea {
   min-width: 260px;
 }
 
+/* 정원 초과 메시지 */
 .modal-message {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 16px;
 }
 
+/* 정원 초과 확인 버튼 */
 .modal-button {
   padding: 8px 16px;
   border-radius: 10px;

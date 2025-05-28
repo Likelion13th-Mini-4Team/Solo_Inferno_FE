@@ -117,8 +117,9 @@ function TeamCreateForm() {
 
       <div className="form-group">
         <label>팀 한마디</label>
-        <textarea
-          placeholder="팀 분위기나 하고 싶은 말 등을 입력하세요!"
+        <input
+          type="text"
+          placeholder="하고 싶은 말 등을 자유롭게 입력하세요!"
           value={teamQuote}
           onChange={(e) => setTeamQuote(e.target.value)}
         />

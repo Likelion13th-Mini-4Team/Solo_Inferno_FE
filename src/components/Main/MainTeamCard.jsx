@@ -9,13 +9,15 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  max-width: 330px;
+  max-width: 330px;        // ← 가로 폭 제한
   width: 100%;
   box-sizing: border-box;
 `;
 
-const Emoji = styled.div`
-  font-size: 32px;
+const Image = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
   margin-right: 12px;
 `;
 
@@ -38,10 +40,10 @@ const Description = styled.div`
 const MainTeamCard = ({ team, onClick }) => {
   return (
     <Card onClick={onClick}>
-      <Emoji>{team.emoji}</Emoji>
+      <Image src={team.image} alt={team.name} />
       <TextContainer>
         <TeamName>{team.name}</TeamName>
-        <Description>{team.description}</Description>
+        <Description>{team.desc}</Description>
       </TextContainer>
     </Card>
   );
