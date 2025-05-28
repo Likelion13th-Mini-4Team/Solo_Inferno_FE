@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // ✅ 추가
 import InputField from './InputField';
 import SelectField from './SelectField';
 import GenderSelect from './GenderSelect';
@@ -8,6 +9,8 @@ import EmailVerify from './EmailVerify';
 import Popup from './Popup';
 
 const SignupForm = () => {
+  const navigate = useNavigate(); // ✅ 추가
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
@@ -22,7 +25,6 @@ const SignupForm = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [popup, setPopup] = useState('');
 
-  // 회원가입 요청
   const handleSignup = async () => {
     if (!id || !password || !confirmPw || !name || !nickname || !studentId || !department || !gender || !birthYear || !email) {
       setPopup('모든 필드를 입력해주세요.');
@@ -38,19 +40,19 @@ const SignupForm = () => {
     }
 
     try {
-        const response = await axios.post(
+      const response = await axios.post(
         'http://3.34.1.245:8080/api/auth/signup',
         {
-            userId: id,
-            password1: password,
-            password2: confirmPw,
-            name,
-            nickname,
-            studentId: parseInt(studentId),
-            major: department,
-            gender,
-            birthYear: parseInt(birthYear),
-            email
+          userId: id,
+          password1: password,
+          password2: confirmPw,
+          name,
+          nickname,
+          studentId: parseInt(studentId),
+          major: department,
+          gender,
+          birthYear: parseInt(birthYear),
+          email
         },
         {
           headers: {
@@ -61,29 +63,27 @@ const SignupForm = () => {
 
       if (response.status === 200 || response.status === 201) {
         setPopup('회원가입이 성공적으로 완료되었습니다.\n이메일 인증 후 로그인해주세요.');
+        setTimeout(() => {
+          navigate('/login'); // ✅ 로그인 페이지로 이동
+        }, 2000);
       }
     } catch (error) {
       console.error('회원가입 오류:', error);
-      console.log('서버 응답 내용:\n' + JSON.stringify(error.response?.data, null, 2));
       setPopup('회원가입에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
-  // 아이디 중복 확인
   const handleCheckId = () => {
     setPopup(id === 'admin' ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
   };
 
-  // 인증코드 요청
   const handleSendEmail = async () => {
     if (!email.includes('@hufs.ac.kr')) {
       setPopup('유효한 학교 이메일을 입력해주세요. (예: xxx@hufs.ac.kr)');
       return;
     }
     try {
-      await axios.post('http://3.34.1.245:8080/api/auth/send-code', {
-        email: email
-      });
+      await axios.post('http://3.34.1.245:8080/api/auth/send-code', { email });
       setPopup('학교 이메일로 인증 링크를 보냈습니다.\n확인 후 인증을 완료해주세요.');
     } catch (err) {
       setPopup('이메일 인증 요청에 실패했습니다.');
@@ -91,7 +91,6 @@ const SignupForm = () => {
     }
   };
 
-  // 인증코드 확인
   const handleVerifyCode = async () => {
     if (!email || !emailCode) {
       setPopup('이메일과 인증코드를 모두 입력해주세요.');
@@ -113,7 +112,6 @@ const SignupForm = () => {
   return (
     <Wrapper>
       <Logo src={require('../../images/logo.jpg')} alt="logo" />
-
       <FormBox>
         <LabeledRow>
           <Label>아이디</Label>
@@ -133,6 +131,7 @@ const SignupForm = () => {
         <InputField label="이름" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름을 입력해주세요." />
         <InputField label="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="사용하실 닉네임을 입력해주세요." />
         <InputField label="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="학번을 입력해주세요. ex) 202302498" />
+        
         <SelectField
           label="학과"
           value={department}
@@ -147,9 +146,11 @@ const SignupForm = () => {
             "폴란드학과", "한국학과", "헝가리학과", "화학과", "컴퓨터공학부", "자유전공학부"
           ]}
         />
+
         <GenderSelect gender={gender} onSelect={setGender} />
         <InputField label="출생년도" value={birthYear} onChange={(e) => setBirthYear(e.target.value)} placeholder="출생년도를 입력해주세요. ex) 2004" />
         <EmailVerify email={email} onChange={(e) => setEmail(e.target.value)} onVerify={handleSendEmail} />
+
         <VerifyBox>
           <InputField
             label="인증코드"
@@ -209,7 +210,6 @@ const IdRow = styled.div`
   display: flex;
   width: 320px;
   gap: 8px;
-  margin: 0;
 `;
 
 const InputOnly = styled.input`
@@ -229,7 +229,6 @@ const SmallButton1 = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  white-space: nowrap;
   height: 40px;
 `;
 
@@ -242,7 +241,6 @@ const SmallButton2 = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  white-space: nowrap;
   height: 40px;
   margin-top: 22px;
 `;
@@ -264,5 +262,4 @@ const VerifyBox = styled.div`
   width: 320px;
   display: flex;
   gap: 10px;
-
 `;
