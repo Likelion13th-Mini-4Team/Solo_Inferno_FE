@@ -1,4 +1,3 @@
-// src/pages/Main/index.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import MainTeamCard from '../../components/Main/MainTeamCard';
@@ -13,8 +12,24 @@ const MainPage = () => {
   const [error, setError] = useState(null);
   const [modalLoading, setModalLoading] = useState(false);
 
+  // ✅ 전체 팀 목록 가져오기
   useEffect(() => {
-    axios.get('http://3.34.1.245:8080/api/teams')
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      try {
+        const decoded = JSON.parse(atob(token.split('.')[1]));
+        console.log("Decoded JWT Payload:", decoded);
+      } catch (e) {
+        console.error("JWT 디코딩 실패", e);
+      }
+    }
+
+    axios.get('http://3.34.1.245:8080/api/teams', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then((res) => {
         const teams = res.data.teams || [];
         setTeamList(teams);
@@ -28,9 +43,16 @@ const MainPage = () => {
       });
   }, []);
 
-  const handleTeamClick = (teamId) => {
+  // ✅ 특정 팀 상세 정보 가져오기
+  const handleTeamClick = (team) => {
     setModalLoading(true);
-    axios.get(`http://3.34.1.245:8080/api/teams/${teamId}`)
+    const token = localStorage.getItem('accessToken');
+    axios.get('http://3.34.1.245:8080/api/teams/teamId', {
+      params: { teamId: team.id },
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then((res) => {
         const data = res.data;
         setSelectedTeam({
@@ -38,7 +60,7 @@ const MainPage = () => {
           image: data.emoji,
           팀소개: data['팀 소개'],
           members: data.members.map(member => ({
-            닉네임: member.이름, // 이름 → 닉네임 변경
+            닉네임: member.이름,
             학번: member.학번,
             학과: member.학과
           }))
@@ -83,7 +105,7 @@ const MainPage = () => {
               <MainTeamCard
                 key={team.id}
                 team={team}
-                onClick={() => handleTeamClick(team.id)}
+                onClick={() => handleTeamClick(team)}
               />
             ))}
 
