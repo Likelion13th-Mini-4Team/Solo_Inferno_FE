@@ -125,12 +125,6 @@ const ActionButton = styled.button`
 const MainDetailModal = ({ team, onClose, customButtons }) => {
   if (!team) return null;
 
-  const members = [
-    { name: '차라투스트라', studentId: 18, age: 28, major: '산업경영공학과' },
-    { name: '김두한', studentId: 22, age: 26, major: '정보통신공학과' },
-    { name: '펭수', studentId: 24, age: 21, major: '컴퓨터공학과' }
-  ];
-
   return (
     <Overlay onClick={onClose}>
       <Modal onClick={(e) => e.stopPropagation()}>
@@ -140,24 +134,24 @@ const MainDetailModal = ({ team, onClose, customButtons }) => {
           <TeamImage src={team.image} alt={team.name} />
           <TeamInfo>
             <TeamName>{team.name}</TeamName>
-            <TeamDesc>{team.desc}</TeamDesc>
+            <TeamDesc>{team.description}</TeamDesc>
           </TeamInfo>
         </TeamHeader>
 
         <Table>
           <thead>
             <tr>
-              <th>닉네임</th>
-              <th>나이</th>
+              <th>이름</th>
+              <th>학번</th>
               <th>학과</th>
             </tr>
           </thead>
           <tbody>
-            {members.map((member, idx) => (
+            {team.members?.map((member, idx) => (
               <tr key={idx}>
-                <td>{member.name}</td>
-                <td>{member.age}</td>
-                <td>{member.major}</td>
+                <td>{member.이름}</td>
+                <td>{member.학번}</td>
+                <td>{member.학과}</td>
               </tr>
             ))}
           </tbody>
@@ -165,12 +159,11 @@ const MainDetailModal = ({ team, onClose, customButtons }) => {
 
         <SectionTitle>팀 소개</SectionTitle>
         <Paragraph>
-          호날두를 좋아하는 공대생들 입니다!!<br />
-          siu 호날두를 좋아하는 공대생들 입니다!!<br />
-          siu 호날두를 좋아하는 공대생들 입니다!! siu
+          {team.팀소개?.split('\n').map((line, idx) => (
+            <span key={idx}>{line}<br /></span>
+          ))}
         </Paragraph>
 
-        {/* ✅ 버튼 선택적으로 렌더링 */}
         {customButtons ? customButtons : (
           <ButtonContainer>
             <ActionButton>매칭하기</ActionButton>

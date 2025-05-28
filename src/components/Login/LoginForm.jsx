@@ -11,6 +11,8 @@ const JoinLink = styled(Link)`
   font-weight: bold;
 `;
 
+// ... 생략된 import 및 styled-components 정의는 그대로 유지
+
 const LoginForm = () => {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
@@ -34,7 +36,9 @@ const LoginForm = () => {
         }
       );
 
-      const token = res.data.token; // or res.data.accessToken
+      console.log(res.data); // ✅ 여기로 옮김
+
+      const token = res.data.token;
       localStorage.setItem('token', token);
       alert('로그인 성공!');
       navigate('/main');
@@ -77,13 +81,14 @@ const LoginForm = () => {
 
       {popup && (
         <Modal>
-          <ModalText>아이디 또는 비밀번호가 일치하지 않습니다.</ModalText>
+          <ModalText>{error}</ModalText>
           <ModalButton onClick={() => setPopup(false)}>확인</ModalButton>
         </Modal>
       )}
     </>
   );
 };
+
 
 export default LoginForm;
 
