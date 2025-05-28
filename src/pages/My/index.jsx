@@ -112,12 +112,12 @@ const Action = styled.div`
     };
   
     const userInfo = [
-      { label: '출생년도', value: '2003' },
-      { label: '학과', value: '컴퓨터공학부' },
-      { label: '닉네임', value: '커플천국' },
-      { label: '아이디', value: 'hufs2345' },
-      { label: '비밀번호', value: '123456' },
-      { label: '이메일', value: 'hufs2345@hufs.ac.kr' },
+      { label: '출생년도', value: '2000' },
+      { label: '학과', value: '정보통신공학과' },
+      { label: '닉네임', value: '정통대표' },
+      { label: '아이디', value: 'bb1212b' },
+      { label: '비밀번호', value: '1234' },
+      { label: '이메일', value: 'qowndnjs124@hufs.ac.kr' },
     ];
   
   return (
@@ -125,8 +125,8 @@ const Action = styled.div`
       <Header />
       <Container>
         <Card>
-          <Title>솔로지옥님   
-          <IconWrapper><WomanIcon /></IconWrapper>
+          <Title>정통대표님   
+          <IconWrapper><manIcon /></IconWrapper>
           </Title>
           <InfoList>
             {userInfo.map(({ label, value }) => (
