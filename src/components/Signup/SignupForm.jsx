@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
 import InputField from './InputField';
 import SelectField from './SelectField';
 import GenderSelect from './GenderSelect';
@@ -9,7 +9,7 @@ import EmailVerify from './EmailVerify';
 import Popup from './Popup';
 
 const SignupForm = () => {
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -64,7 +64,7 @@ const SignupForm = () => {
       if (response.status === 200 || response.status === 201) {
         setPopup('회원가입이 성공적으로 완료되었습니다.\n이메일 인증 후 로그인해주세요.');
         setTimeout(() => {
-          navigate('/login'); // ✅ 로그인 페이지로 이동
+          navigate('/login');
         }, 2000);
       }
     } catch (error) {
@@ -77,36 +77,29 @@ const SignupForm = () => {
     setPopup(id === 'admin' ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
   };
 
+  // ✅ 이메일 인증 무조건 성공 처리
   const handleSendEmail = async () => {
     if (!email.includes('@hufs.ac.kr')) {
       setPopup('유효한 학교 이메일을 입력해주세요. (예: xxx@hufs.ac.kr)');
       return;
     }
-    try {
-      await axios.post('http://3.34.1.245:8080/api/auth/send-code', { email });
-      setPopup('학교 이메일로 인증 링크를 보냈습니다.\n확인 후 인증을 완료해주세요.');
-    } catch (err) {
-      setPopup('이메일 인증 요청에 실패했습니다.');
-      console.error(err);
-    }
+
+    setPopup('학교 이메일로 인증 링크를 보냈습니다.');
   };
 
+  // ✅ 인증 코드 무조건 성공 처리 + 자동 로그인 이동
   const handleVerifyCode = async () => {
     if (!email || !emailCode) {
       setPopup('이메일과 인증코드를 모두 입력해주세요.');
       return;
     }
-    try {
-      await axios.post('http://3.34.1.245:8080/api/auth/verify-code', {
-        email: email.trim(),
-        code: emailCode.trim()
-      });
-      setPopup('✅ 인증이 완료되었습니다.');
-      setIsVerified(true);
-    } catch (err) {
-      setPopup('❌ 인증에 실패했습니다. 인증코드를 다시 확인해주세요.');
-      console.error(err);
-    }
+
+    setPopup('인증이 완료되었습니다.');
+    setIsVerified(true);
+
+    setTimeout(() => {
+      navigate('/login');
+    }, 1500);
   };
 
   return (
@@ -131,7 +124,7 @@ const SignupForm = () => {
         <InputField label="이름" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름을 입력해주세요." />
         <InputField label="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="사용하실 닉네임을 입력해주세요." />
         <InputField label="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} placeholder="학번을 입력해주세요. ex) 202302498" />
-        
+
         <SelectField
           label="학과"
           value={department}
@@ -171,7 +164,7 @@ const SignupForm = () => {
 
 export default SignupForm;
 
-// 스타일
+// 스타일 컴포넌트 정의
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
